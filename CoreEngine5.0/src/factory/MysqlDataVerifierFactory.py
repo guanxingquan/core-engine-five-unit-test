@@ -64,6 +64,24 @@ class MysqlDataVerifier():
             log.exception("%s",e)
             pass
         pass
+    
+    def isConnected(self):
+        '''
+        return True means Connected , else disConnected
+        '''
+        try:
+            config = Config(CameraConfig).getConfig()
+            Id = config.get(updateDevice, "device-id")
+            event_type = Mysql().getDeviceConnection(Id)
+            if event_type==5:
+                log.debug("Device Id is %s, Connected!",Id)
+                return True
+            else:
+                log.debug("Device Id is %s, disConnected!",Id)
+                return False
+            pass
+        except Exception,e:
+            log.exception("Connected Exception:%s",e)
 #     def testCorrectnessInDsDeviceInfo(self):
 #         '''
 #         check if there is a device named "unittest-amtk" in ds_device_info

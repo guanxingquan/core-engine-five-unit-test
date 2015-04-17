@@ -227,7 +227,21 @@ class DeviceManagementServerFactory():
             log.error("update exception, %s", e)
             raise Exception("update device fail")
     
-    
+    def chagePort(self):
+        config = Config(CameraConfig)
+        rightPort = config.getFromConfig(onlineDevice, 'port')
+        errorPort = config.getFromConfig(onlineDevice, 'error-port')
+        config.writeToConfig(onlineDevice, 'port', errorPort)
+        config.writeToConfig(onlineDevice, 'error-port', rightPort)
+        deviceDetails = self.getDeviceDetails(onlineDevice,False)
+        result = self.client.updataDevice(deviceDetails)
+        if result:
+            log.debug('update device success')
+#                 raise Exception("update device fail")
+        else:
+            log.debug("update device failed")
+            return result
+        pass
 
     def getDeviceDetails(self, manipulate,isadd):
         configuration = Config(CameraConfig)

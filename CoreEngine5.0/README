@@ -1,0 +1,28 @@
+Version:
+	Core-Engine-Unit-Test-V1.0
+	
+The structure of the package:
+	src ...... code
+	configs ...... config file 
+	linux ...... shell file
+	
+Summary:
+	Test add device
+	Test edit device
+	Test delete device
+	Test get device list
+	Test get device status
+	
+How to use:
+	log in configs folder,edit server-config.cfg
+	***only edit Arbiter section 
+	
+	if necessary need to edit onlineModel and offlineModel in camera-config.cfg
+	
+	then,log in linux folder,you can chose a shell file to test
+	***eg: sh run-test-add.sh
+	
+Message:
+	Author:guanxingquan
+	Email:guanxingquan@kaisquare.com.cn
+	Creat: 2015-04-17

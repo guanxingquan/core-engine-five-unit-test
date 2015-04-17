@@ -55,8 +55,12 @@ class Mysql(object):
         sql = "select * from ds_device where id=%s ;"
         result = self.executeSql(sql, deviceId)
         return result
-    def getDeviceConnection(self):
-        sql = "select * from device_events where device_id = %s"
+    
+    def getDeviceConnection(self,deviveId):
+        sql = "select event_type from device_events where device_id = %s order by time desc limit 0,1"
+        result = self.executeSql(sql,deviveId)
+        return result
+    
 #     def getDsServerInfo(self,deviceId):
 #         sql = "select * from ds_server_info where id=(select server_id from ds_device_info where id=%s) ;"
 #         result = self.executeSql(sql,deviceId)
