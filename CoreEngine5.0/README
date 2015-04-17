@@ -12,6 +12,11 @@ Summary:
 	Test delete device
 	Test get device list
 	Test get device status
+
+Preconditions:
+	1. Core Engine 5.0 and running normal
+	2. Mysql service
+	3. Install MySQLdb
 	
 How to use:
 	log in configs folder,edit server-config.cfg
