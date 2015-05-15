@@ -24,8 +24,8 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 formatter = logging.Formatter('[%(asctime)s] %(filename)s(%(funcName)s:%(lineno)d)[%(levelname)s] %(message)s')
-logPath=".." + os.path.sep + ".." + os.path.sep + "scripts" + os.path.sep + "log" + os.path.sep
-logPaths = "/home/node/importDemo/scripts/log"
+logPaths=".." + os.path.sep + ".." + os.path.sep + "scripts" + os.path.sep + "log" + os.path.sep
+logPath = "/home/node/CoreEngine5.0/log/"
 #################################################################################################
 #DEBUG and the above level output
 debug = logging.FileHandler(logPath + "core-test-debug.log","w")
@@ -48,12 +48,15 @@ def getLog(logger):
     return logging.getLogger(logger)
 
 def debug(msg):
+    print msg
     logging.debug(msg)
     
 def info(msg):
+    print msg
     logging.info(msg)
     
 def error(msg):
+    print msg
     logging.error(msg)    
 
 if __name__ == '__main__':

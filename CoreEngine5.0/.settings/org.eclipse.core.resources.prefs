@@ -1,8 +1,10 @@
 eclipse.preferences.version=1
 encoding//src/CoreServices/ttypes.py=UTF-8
 encoding//src/basic/LogUtil.py=GBK
+encoding//src/factory/ConfigControlServiceFactory.py=GBK
 encoding//src/factory/DeviceControlServiceFactory.py=GBK
 encoding//src/factory/DeviceManagementServerFactory.py=GBK
 encoding//src/factory/MysqlDataVerifierFactory.py=GBK
+encoding//src/factory/StreamControlServerFactory.py=GBK
 encoding/<project>=UTF-8
 separateDerivedEncodings=true

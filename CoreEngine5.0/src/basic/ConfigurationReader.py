@@ -4,10 +4,10 @@ Created on 2014-6-19
 @author: Administrator
 '''
 import ConfigParser
-import os
+# import os
 
-configPath = ".." + os.path.sep + ".." + os.path.sep + "configs" + os.path.sep
-
+# configPath = ".." + os.path.sep + ".." + os.path.sep + "configs" + os.path.sep
+configPath = "/home/node/CoreEngine5.0/configs/"
 class Config():
     config = None
     def __init__(self,filename):

@@ -6,7 +6,7 @@
 #  options string: py
 #
 
-from thrift.Thrift import TType, TMessageType, TException
+from thrift.Thrift import TType, TMessageType, TException,TApplicationException
 from ttypes import *
 from thrift.Thrift import TProcessor
 from thrift.transport import TTransport
@@ -222,6 +222,7 @@ class Client(Iface):
                 "http/h264" for H.264 video over HTTP protocol
                 "rtsp/h264" for H.264 video over RTSP protocol
                 "http/jpeg" for JPEG snapshots over HTTP protocol
+                "rtmp/h264" for H.264 video over RTSP protocol
     (4) allowedClientIpAddresses - list of IP address from which the Core
          may accept connections for streaming of this URL.
     (5) deviceId - Unique ID of the device whose stream is requested.

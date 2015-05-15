@@ -6,10 +6,10 @@ Created on 2014-8-18
 '''
 from CoreServices import DeviceControlService
 from basic.ConfigurationReader import Config
-from basic import ThriftClient
+from basic import ThriftClient,LogUtil
 from basic.Constants import Arbiter,deleteDevice,CameraConfig,ServerConfig
-import logging
-log = logging.getLogger('testDeviceControlService')
+
+log = LogUtil.getLog('testDeviceControlService')
 
 class DeviceControlServiceClient():
     client = None
@@ -37,4 +37,3 @@ class DeviceControlServiceClient():
                 return False
         except Exception,e:
             log.exception("Exception:%s",e)
-        

@@ -9,15 +9,16 @@ Created on 2014-6-20
 
 from basic.MysqlOperator import Mysql
 from basic import MysqlConnector, Constants
-from basic.Constants import deviceName
 from basic.ConfigurationReader import Config
-from basic.Constants import updateDevice,CameraConfig,ServerConfig
+from basic.Constants import updateDevice,CameraConfig,ServerConfig,globalParameter,KAIUP,\
+    parameter
 import time
-import logging
+from basic import LogUtil
 import json
+from time import sleep
 
 
-log = logging.getLogger("TestMysqlDataVerifier")
+log = LogUtil.getLog("TestMysqlDataVerifier")
 class MysqlDataVerifier():
     
     con = None
@@ -70,92 +71,25 @@ class MysqlDataVerifier():
         return True means Connected , else disConnected
         '''
         try:
+            
             config = Config(CameraConfig).getConfig()
             Id = config.get(updateDevice, "device-id")
             event_type = Mysql().getDeviceConnection(Id)
-            if event_type==5:
-                log.debug("Device Id is %s, Connected!",Id)
-                return True
+            if len(event_type) != 0:
+                if event_type[0][0] == 5:
+                    log.debug("Device Id is %s, Connected!",Id)
+                    return True
+                else:
+                    log.debug("Device Id is %s,Event type is %s disConnected!",Id,event_type[0][0])
+                    return False
             else:
-                log.debug("Device Id is %s, disConnected!",Id)
+                log.debug("Device Id is %s,Event type is NULL,DisConnected!",Id)
                 return False
+                
             pass
         except Exception,e:
             log.exception("Connected Exception:%s",e)
-#     def testCorrectnessInDsDeviceInfo(self):
-#         '''
-#         check if there is a device named "unittest-amtk" in ds_device_info
-#         '''
-#         try:
-#             log.debug("test if device added to ds_device_info")
-#             #get device's id whose name is "unittest-amtk" 
-#             device = Mysql().getDeviceByName()
-#             deviceId = device[0][0]#the first filed in devices is deviceId
-#             #select from ds_device_info to verify if there is a device named "unittest-amtk"        
-#             dsDeviceInfo = Mysql().getDsDeviceInfo(deviceId)
-#             log.debug("ds_device_info=%s", dsDeviceInfo)
-#             #the second one is device_info which contains deviceName
-#             deviceInfo = dsDeviceInfo[0][2]
-#             isDeviceExist = False
-#             Real_DeviceName = Config("device-information.cfg").getFromConfig(deviceName, "addedDeviceName")
-#             if Real_DeviceName in deviceInfo:
-#                 isDeviceExist = True
-#                 log.debug("device name in ds_device_info=%s",deviceInfo)
-#                 log.debug("added to dsDeviceInfo correctly/success!")
-#             else:
-#                 log.debug("device name not in ds_device_info")
-#             return isDeviceExist
-#         except Exception,e:
-#             log.error("exception, %s", e)
-#             return False
-    
-#     def testIfDeviceAddedToDs(self):
-#         '''
-#         get the value of server_id in ds_device_info to see if the device
-#         added to DS successfully. 
-#         '''
-#         try:
-#             log.debug("test if device added to a DS")
-#             #sleep some time to wait the device added to DS
-#             log.debug("sleep 40 seconds to wait DS register")
-#             time.sleep(40)
-#             device = Mysql().getDeviceByName()
-#             deviceId = device[0][0]#the first filed in devices is deviceId
-#             dsDeviceInfo = Mysql().getDsDeviceInfo(deviceId)
-#             dsId = dsDeviceInfo[0][4]
-#             log.debug("ds_device_info=%s", dsDeviceInfo)
-#             if dsId == -1:
-#                 log.debug('maybe device has not added to DS')
-#                 return False
-#             return True
-#         except Exception,e:
-#             log.error("exception, %s", e)
-#             return False
-        
-#     def testMatchUpInChannelDeviceMap(self):
-#         '''
-#         See if the matchup in channel_device_map is correct
-#         '''
-#         try:
-#             device = Mysql().getDeviceByName()
-#             deviceId = device[0][0]
-#             
-#             #on Kai-node, check the channel_device matchup
-#             log.debug("test channel_device_map")
-#             map = Mysql().getChannelDeviceMap()
-#             log.debug("channel-device-map=%s",map)
-#             #if there is device_id in the channel_device_map, then the map is correct
-#             if len(map) != 0:
-#                 for each in map:
-#                     #node_device_id
-#                     nodeDeviceId = each[2]
-#                     if (nodeDeviceId == deviceId):
-#                         log.debug("device_channel map is correct.") 
-#             raise Exception("maybe")
-#         except Exception,e:
-#             log.error("exception, %s", e)
-#             raise Exception("device-channel-map exception")
-#         #on KUP, the judge process will be different 
+
     
     def isSame(self,device_id,models):
         #Config file Model information
@@ -173,6 +107,8 @@ class MysqlDataVerifier():
         
         #DB device Information
         device = Mysql().getDeviceById(device_id)
+        if len(device)==0:
+            return False
         log.debug("device:%s",device)
         log.debug("name:%s",device[0][1])
         log.debug("key:%s",device[0][2])
@@ -207,45 +143,6 @@ class MysqlDataVerifier():
             return True
         return False
         
-#     def testIfDeviceUpdated(self):
-#         '''
-#         check if the device's host updated to the new one correctly
-#         in devices and ds_device_info
-#         '''
-#         try:
-#             log.debug("test if device updated correctly")
-#             #get device's id whose name is "unittest-amtk" 
-#             device = Mysql().getDeviceByName()
-#             deviceId = device[0][0]#the first filed in devices is deviceId
-#             updatedHost = device[0][3]
-#             log.debug("updated host=%s", updatedHost)
-#             
-#             #if this device updated correctly in devices
-#             hostUpdatedInDevices = False
-#             #get the updated host from configuration.cfg
-#             intendedHost = Config(CameraConfig).getFromConfigs(Constants.updateDevice, "host")
-#             if intendedHost !=  updatedHost:
-#                 hostUpdatedInDevices = True
-#             
-#             #select from ds_device_info to verify if the device's host updated successfully        
-#             dsDeviceInfo = Mysql().getDsDeviceInfo(deviceId)
-#             log.debug("ds_device_info=%s",dsDeviceInfo)
-#             #the second one is device_info which contains device's host
-#             deviceInfo = dsDeviceInfo[0][2]
-#             hostUpdatedInDsDevInfo = False
-#             if intendedHost in deviceInfo:
-#                 hostUpdatedInDsDevInfo = True
-#             
-#             #only if host updated in devices and ds_device_info, the update is successful
-#             if hostUpdatedInDevices == False | hostUpdatedInDsDevInfo == False:
-#                 log.debug('device updated fail')
-#                 raise Exception("device updated fail")
-#             
-#             #self.assertEqual(hostUpdated, True,"maybe device update fail")
-#             log.debug("device updated correctly")
-#         except Exception,e:
-#             log.error("exception, %s", e)
-#             raise Exception("")
         
     def testIfDeviceDeleted(self):
         '''
@@ -318,6 +215,16 @@ class MysqlDataVerifier():
         else:
             log.debug("KUP not set success")
             return False
+        
+    def getMap(self):
+        deviceId = Config(KAIUP).getFromConfig(parameter, "node-device-id")
+        deviceKey = Config(KAIUP).getFromConfig(parameter, "node-mac-address")
+        kup_map = Mysql().kaiup_getmap(deviceId, deviceKey)
+        if len(kup_map) <= 0:
+            return None
+        kup_deviceId = kup_map[0][0]
+        kup_chnnel = kup_map[0][1]
+        return (str(kup_deviceId),str(kup_chnnel))
     #----some auxiliary methods
     def isExist(self):
         pass   
