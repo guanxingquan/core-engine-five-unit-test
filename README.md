@@ -13,3 +13,10 @@ Note:
 2. have to make sure core engine service start and normal
 3. Core Engine version is 5.0
 4. Mysql is already running
+
+Version: v5.0.1
+Document: the basic nose test framework.
+
+VERDION:V5.0.2
+Eception: Already down most of function.
+
