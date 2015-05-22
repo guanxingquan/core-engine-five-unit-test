@@ -7,7 +7,7 @@ import ConfigParser
 # import os
 
 # configPath = ".." + os.path.sep + ".." + os.path.sep + "configs" + os.path.sep
-configPath = "/home/node/CoreEngine5.0/configs/"
+configPath = "/home/ubuntu/CoreEngine5.0/configs/"
 class Config():
     config = None
     def __init__(self,filename):

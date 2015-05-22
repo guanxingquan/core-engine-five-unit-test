@@ -5,12 +5,10 @@
 # print output
 
 
-# def get():
-#     return (1,2)
-# 
-# (a,b) = get()
-# print a,b
-# print b
+def get():
+    return (1,2)
 
-for i in range(5):
-    print i
+(a,b) = get()
+print a,b
+print b
+

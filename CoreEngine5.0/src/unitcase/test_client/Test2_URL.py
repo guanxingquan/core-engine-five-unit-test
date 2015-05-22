@@ -42,21 +42,21 @@ class TestLiveView(object):
         assert result
         pass
     
-    def test3_HLS_URL(self):
+    def test3_MJPEG_URL(self):
         '''
-        Test HTTP/H264 URL
+        Test HTTP/MJPEG URL
         '''
-        TYPE = Config(ServerConfig).getFromConfig(videoType, "hls")
+        TYPE = Config(ServerConfig).getFromConfig(videoType, "mjpeg")
         result = self.streamControl.getDevicetUrl(TYPE)
         log.info("Message :%s   Result : %s",TYPE,result)
         assert result
         pass
     
-    def test4_MJPEG_URL(self):
+    def test4_HLS_URL(self):
         '''
-        Test HTTP/MJPEG URL
+        Test HTTP/H264 URL
         '''
-        TYPE = Config(ServerConfig).getFromConfig(videoType, "mjpeg")
+        TYPE = Config(ServerConfig).getFromConfig(videoType, "hls")
         result = self.streamControl.getDevicetUrl(TYPE)
         log.info("Message :%s   Result : %s",TYPE,result)
         assert result

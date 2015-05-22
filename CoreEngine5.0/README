@@ -51,13 +51,4 @@ Already Test Interface:
 #NEED DO INTERFACE:	
 	Node: rtmp,rtsp,mjpeg,snapshot,hls  liveview.
 	
-
-
-
-Version:
-	Core-Engine-Unit-Test-V1.0.1
-Summary:
-	except basic function, new add recording , storage ,liveview ,snapshot...
-	kainode: rtsp rtmp hld mjpeg jpeg , URL test
-	kainode: Stream Session (begin,keep,end) 
 	

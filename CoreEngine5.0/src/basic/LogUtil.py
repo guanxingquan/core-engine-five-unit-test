@@ -25,7 +25,7 @@ logging.basicConfig(level=logging.DEBUG,
 
 formatter = logging.Formatter('[%(asctime)s] %(filename)s(%(funcName)s:%(lineno)d)[%(levelname)s] %(message)s')
 logPaths=".." + os.path.sep + ".." + os.path.sep + "scripts" + os.path.sep + "log" + os.path.sep
-logPath = "/home/node/CoreEngine5.0/log/"
+logPath = "/home/ubuntu/CoreEngine5.0/log/"
 #################################################################################################
 #DEBUG and the above level output
 debug = logging.FileHandler(logPath + "core-test-debug.log","w")
